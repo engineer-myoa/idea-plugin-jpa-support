@@ -230,7 +230,7 @@ public class TablesConfig {
       return Arrays.stream(values())
           .filter(lineSeparator -> lineSeparator.name().equalsIgnoreCase(name))
           .findAny()
-          .orElseThrow(() -> new IllegalStateException("未定义的换行平台:" + name));
+          .orElseThrow(() -> new IllegalStateException("Undefined Wrap Platform :" + name));
     }
   }
 }

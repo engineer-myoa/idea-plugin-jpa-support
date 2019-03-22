@@ -11,59 +11,59 @@ public interface Element {
   void setLineSeparator(String lineSeparator);
 
   /**
-   * 设置缩进方式
+   * Set the indentation mode
    */
   void setIndent(Indent indent);
 
   /**
-   * 设置父元素
+   * Set parent element
    */
   void setParent(Element parent);
 
   /**
-   * 获取当前元素的父元素
+   * Get the parent element of the current element
    *
-   * @return 如果当前元素没有父元素则返回null
+   * @return Return null if the current element has no parent
    */
   Element parent();
 
   /**
-   * 从当前元素一直向上查找，返回匹配的元素
+   * Look up from the current element and return the matching element
    */
   Element parents(String name);
 
   /**
-   * 向当前节点添加子节点
+   * Add a child node to the current node
    */
   void addChild(Element child);
 
   /**
-   * 获取当前元素的直接子元素
+   * Get the immediate child of the current element
    */
   List<Element> children();
 
   /**
-   * 获取同级元素同名的第一个兄弟元素
+   * Get the first sibling element with the same name as the sibling element
    */
   Element firstSibling(String name);
 
   /**
-   * 获取同级元素同名的所有兄弟元素
+   * Get all siblings with the same name as the sibling
    */
   List<Element> siblings(String name);
 
   /**
-   * 获取统计元素的所有兄弟元素
+   * Get all the sibling elements of a statistic element
    */
   List<Element> siblings();
 
   /**
-   * 获取当前元素名称
+   * Get the current element name
    */
   String name();
 
   /**
-   * 生成源代码
+   * Generate source code
    */
   String toJavaCode();
 
@@ -120,14 +120,14 @@ public interface Element {
     }
 
     /**
-     * value以普通形式生成，如 number,boolean...
+     * Value is generated in the normal form, such as number, boolean...
      */
     public static KeyValuePair newKeyValuePair(String key, String value) {
       return new KeyValuePair(key, value);
     }
 
     /**
-     * value以字符串形式生成
+     * Value is generated as a string
      */
     public static KeyValuePair newKeyAndStringValuePair(String key, String value) {
       return new KeyValuePair(key, "\"" + value + "\"");

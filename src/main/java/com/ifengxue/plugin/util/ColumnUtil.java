@@ -63,7 +63,7 @@ public class ColumnUtil {
       }
       column.setHasDefaultValue(true);
 
-      // 跳过设置 Date/Timestamp 的默认值
+      // Skip setting the default value of Date/Timestamp
       if (javaDataType == Date.class || javaDataType == Timestamp.class) {
         column.setDefaultValue(null);
         column.setHasDefaultValue(false);
