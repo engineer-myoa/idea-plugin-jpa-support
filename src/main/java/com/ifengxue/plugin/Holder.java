@@ -1,5 +1,4 @@
 package com.ifengxue.plugin;
-// @TODO [\u2E80-\u9FFF]{1,} replace need
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import java.util.Objects;
