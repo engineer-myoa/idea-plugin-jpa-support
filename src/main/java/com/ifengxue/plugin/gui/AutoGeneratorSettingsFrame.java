@@ -40,7 +40,7 @@ public class AutoGeneratorSettingsFrame {
   private final AutoGeneratorSettings autoGeneratorSettingsHolder;
 
   private AutoGeneratorSettingsFrame(List<TableSchema> tableSchemaList) {
-    this.frameHolder = new JFrame("自动生成选项");
+    this.frameHolder = new JFrame("Automatic Generation Option");
     this.autoGeneratorSettingsHolder = new AutoGeneratorSettings();
     frameHolder.setContentPane(autoGeneratorSettingsHolder.getRootComponent());
     frameHolder.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -55,9 +55,9 @@ public class AutoGeneratorSettingsFrame {
     Project project = actionEvent.getProject();
     assert project != null;
     config.setProjectBasePath(project.getBasePath());
-    // 选择父类
+    // Select parent class
     autoGeneratorSettingsHolder.getBtnChooseSuperClass().addActionListener(event -> {
-      TreeJavaClassChooserDialog classChooser = new TreeJavaClassChooserDialog("选择父类", project);
+      TreeJavaClassChooserDialog classChooser = new TreeJavaClassChooserDialog("Select parent class\n", project);
       classChooser.show();
       PsiClass selectedClass = classChooser.getSelected();
       if (selectedClass != null) {
@@ -76,9 +76,9 @@ public class AutoGeneratorSettingsFrame {
       }
       frameHolder.requestFocus();
     });
-    // 选择entity包
+    // Select the package
     autoGeneratorSettingsHolder.getBtnChooseEntityPackage().addActionListener(event -> {
-      PackageChooser packageChooser = new PackageChooserDialog("选择实体包路径", project);
+      PackageChooser packageChooser = new PackageChooserDialog("Select the package path", project);
       packageChooser.show();
       PsiPackage selectedPackage = packageChooser.getSelectedPackage();
       if (selectedPackage != null) {
@@ -90,9 +90,9 @@ public class AutoGeneratorSettingsFrame {
       }
       frameHolder.requestFocus();
     });
-    // 选择repository包
+    // Select the Repository package
     autoGeneratorSettingsHolder.getBtnChooseRepositoryPackage().addActionListener(event -> {
-      PackageChooser packageChooser = new PackageChooserDialog("选择Repository包路径", project);
+      PackageChooser packageChooser = new PackageChooserDialog("Select the Repository package path", project);
       packageChooser.show();
       PsiPackage selectedPackage = packageChooser.getSelectedPackage();
       if (selectedPackage != null) {
@@ -107,7 +107,7 @@ public class AutoGeneratorSettingsFrame {
     autoGeneratorSettingsHolder.getBtnCancel().addActionListener(event -> frameHolder.dispose());
     autoGeneratorSettingsHolder.getBtnNext().addActionListener(
         event -> {
-          // 读取属性
+          // Read attribute
           config.setRemoveTablePrefix(autoGeneratorSettingsHolder.getTextRemoveTablePrefix().getText().trim());
           config.setRemoveFieldPrefix(autoGeneratorSettingsHolder.getTextRemoveFieldPrefix().getText().trim());
           config.setExtendBaseClass(autoGeneratorSettingsHolder.getTextExtendBaseClass().getText().trim());
@@ -134,7 +134,7 @@ public class AutoGeneratorSettingsFrame {
             autoGeneratorSettingsHolder.getTxtRepositoryPackage().requestFocus();
             return;
           }
-          //TODO 保留主键类型
+          //TODO Retain primary key type
           List<Table> tableList = new ArrayList<>(tableSchemaList.size());
           VirtualFile vFile = LocalFileSystem.getInstance().findFileByPath(config.getEntityDirectory());
           assert vFile != null;
@@ -153,7 +153,7 @@ public class AutoGeneratorSettingsFrame {
             }
             tableList.add(Table.from(tableSchema, entityName, selected));
           }
-          // 保存属性
+          // Save attribute
           saveTextField(config);
           SelectTablesFrame.show(tableList, config);
           frameHolder.dispose();

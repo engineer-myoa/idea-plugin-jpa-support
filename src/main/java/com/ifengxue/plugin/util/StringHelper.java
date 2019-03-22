@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 字符串工具类
+ * String tool class
  */
 public class StringHelper {
 
@@ -26,7 +26,7 @@ public class StringHelper {
   }
 
   /**
-   * 解析基本类型的封装类型
+   * Parsing the basic type of encapsulation type
    */
   public static Class<?> getWrapperClass(Class<?> clazz) {
     Map<String, Class<?>> clazzWrapper = new HashMap<>();
@@ -40,7 +40,7 @@ public class StringHelper {
   }
 
   /**
-   * 获取封装类型的基本数据类型
+   * Get the basic data type of the package type
    */
   public static Class<?> getPrimitiveClass(Class<?> clazz) {
     return WRAPPER_DATA_TYPE_AND_PRIMITIVE_DATA_TYPE.getOrDefault(clazz, clazz);
@@ -93,7 +93,7 @@ public class StringHelper {
         break;
       default:
         javaDataType = String.class;
-        log.warn("不支持的数据库类型:" + dbDataType + "，用String替代");
+        log.warn("Unsupported Database Type:" + dbDataType + "，Replace with String");
         break;
     }
     if (columnName.startsWith("is_")) {
@@ -106,7 +106,7 @@ public class StringHelper {
   }
 
   /**
-   * 解析实体名称
+   * Parse the entity name
    */
   public static String parseEntityName(String className) {
     className = parseSimpleName(className);
@@ -115,7 +115,7 @@ public class StringHelper {
   }
 
   /**
-   * 与StringHelper.class.getSimpleName()效果一致
+   * Consistent with StringHelper.class.getSimpleName()
    */
   public static String parseSimpleName(String className) {
     if (className.contains(".")) {
@@ -125,7 +125,7 @@ public class StringHelper {
   }
 
   /**
-   * 解析列名 <br>
+   * Parse column name <br>
    * column_name -> columnName <br>
    * column_name_ -> columnName <br>
    * _column_name_ -> columnName <br>
@@ -156,13 +156,13 @@ public class StringHelper {
   }
 
   /**
-   * 解析列名<br>
+   * Parse column name<br>
    * prefix_column_name -> columnName <br>
    * prefix_column_name_ -> columnName <br>
    * prefix__column_name_ -> columnName <br>
    *
-   * @param columnName 字段名称
-   * @param removePrefix 要移除的前缀
+   * @param columnName Field Name
+   * @param removePrefix The prefix to remove
    */
   public static String parseFieldName(String columnName, String removePrefix) {
     if (removePrefix == null || removePrefix.isEmpty() || !columnName.startsWith(removePrefix)) {
@@ -172,63 +172,63 @@ public class StringHelper {
   }
 
   /**
-   * 解析字段的set方法名称
+   * Parse the set method name of the field
    */
   public static String parseSetMethodName(String fieldName) {
     return "set" + firstLetterUpper(fieldName);
   }
 
   /**
-   * 解析字段的get方法名称
+   * Parse the get method name of the field
    */
   public static String parseGetMethodName(String fieldName) {
     return "get" + firstLetterUpper(fieldName);
   }
 
   /**
-   * 解析字段的is方法名称
+   * Parse the is method name of the field
    */
   public static String parseIsMethodName(String fieldName) {
     return "is" + firstLetterUpper(fieldName);
   }
 
   /**
-   * 解析字段的update方法名称
+   * Parse the update method name of the field
    */
   public static String parseUpdateMethodName(String fieldName) {
     return "update" + firstLetterUpper(fieldName);
   }
 
   /**
-   * 解析字段转枚举的方法名称
+   * Parse the method name of the field to enumeration
    */
   public static String parseGetEnumByMethodName(String fieldName) {
     return "getEnumBy" + firstLetterUpper(fieldName);
   }
 
   /**
-   * 解析枚举转字段的方法名称
+   * Parse the method name of the enumeration turn field
    */
   public static String parseSetEnumMethodName(String fieldName) {
     return "set" + firstLetterUpper(fieldName) + "Enum";
   }
 
   /**
-   * 首字母大写
+   * Initial capitalization
    */
   public static String firstLetterUpper(String name) {
     return name.replaceFirst(String.valueOf(name.charAt(0)), String.valueOf(name.charAt(0)).toUpperCase());
   }
 
   /**
-   * 首字母小写
+   * Initial letter lowercase
    */
   public static String firstLetterLower(String name) {
     return name.replaceFirst(String.valueOf(name.charAt(0)), String.valueOf(name.charAt(0)).toLowerCase());
   }
 
   /**
-   * 包名转文件夹名称
+   * Package name to folder name
    */
   public static String packageNameToFolder(String packageName) {
     if (packageName.contains(".")) {
@@ -239,7 +239,7 @@ public class StringHelper {
   }
 
   /**
-   * 实体包名转接口包名
+   * Entity package name transfer interface package name
    */
   public static String entityPackageNameToServicePackageName(String entityPackageName) {
     if (entityPackageName.contains(".")) {
@@ -250,7 +250,7 @@ public class StringHelper {
   }
 
   /**
-   * 实体包名转dao包名
+   * Entity package name
    */
   public static String entityPackageNameToDAOPackageName(String entityPackageName) {
     if (entityPackageName.contains(".")) {
@@ -261,7 +261,7 @@ public class StringHelper {
   }
 
   /**
-   * 实体名转mapper包名
+   * Entity name to mapper package name
    */
   public static String entityPackageNameToMapperPackageName(String entityPackageName) {
     String daoPackageName = entityPackageNameToDAOPackageName(entityPackageName);
@@ -269,10 +269,10 @@ public class StringHelper {
   }
 
   /**
-   * 对<code>repeat</code>重复拼接<code>times</code>次
+   * Repeat splicing <code>times</code> times for <code>repeat</code>
    *
-   * @param repeat 要进行重复的字符串
-   * @param times 重复次数
+   * @param repeat A string to be repeated
+   * @param times Repeat times
    */
   public static String repeat(String repeat, int times) {
     StringBuilder builder = new StringBuilder();
@@ -283,7 +283,9 @@ public class StringHelper {
   }
 
   /**
-   * 将当前字符串按<code>lineSeparator</code>拆分，在每个拆分字符串前添加<code>indent</code>，之后添加<code>lineSeparator</code>
+   * Split the current string by <code>lineSeparator</code>,
+   * add <code>indent</code> before each split string,
+   * then add <code>lineSeparator</code>
    */
   public static String insertIndentBefore(String string, String lineSeparator, String indent) {
     return Arrays.stream(string.split(lineSeparator))

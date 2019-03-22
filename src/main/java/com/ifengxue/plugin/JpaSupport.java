@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.LoggerFactory;
 
 /**
- * jpa support 入口
+ * JPA support entrance
  */
 public class JpaSupport extends AnAction {
   private Logger log = Logger.getInstance(JpaSupport.class);
@@ -51,14 +51,14 @@ public class JpaSupport extends AnAction {
   @Override
   public void actionPerformed(@NotNull AnActionEvent e) {
     if (e.getProject() == null) {
-      Messages.showWarningDialog("没有激活的Project!", "Jps Support");
+      Messages.showWarningDialog("project not activated!", "Jps Support");
       return;
     }
-    Holder.registerEvent(e);// 注册事件
+    Holder.registerEvent(e);// Registration issue
     Holder.registerApplicationProperties(PropertiesComponent.getInstance());
     Holder.registerProjectProperties(PropertiesComponent.getInstance(e.getProject()));
 
-    JFrame databaseSettingsFrame = new JFrame("设置数据库属性");
+    JFrame databaseSettingsFrame = new JFrame("Set database properties");
     DatabaseSettings databaseSettings = new DatabaseSettings();
     databaseSettingsFrame.setContentPane(databaseSettings.getRootComponent());
     databaseSettingsFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -68,9 +68,9 @@ public class JpaSupport extends AnAction {
     initTextField(databaseSettings);
     databaseSettingsFrame.setVisible(true);
 
-    // 注册取消事件
+    // Registration cancel event
     databaseSettings.getBtnCancel().addActionListener(event -> databaseSettingsFrame.dispose());
-    // 注册下一步事件
+    // Register for the next event
     databaseSettings.getBtnNext().addActionListener(event -> {
       String host = databaseSettings.getTextHost().getText().trim();
       if (host.isEmpty()) {
@@ -102,15 +102,15 @@ public class JpaSupport extends AnAction {
       String url =
           "jdbc:mysql://" + host + ":" + port + "/" + database + "?useUnicode=true&charset=utf8";
       new Thread(() -> {
-        // 尝试获取连接
+        // Try to get a connection
         try {
           DriverManager.getConnection(url, username, password);
         } catch (SQLException se) {
           ApplicationManager.getApplication().invokeLater(() -> Bus
               .notify(new Notification("JpaSupport", "Error",
-                  "连接数据库失败(" + se.getErrorCode() + "," + se.getSQLState() + "," + se
+                  "Unable to connect to the database(" + se.getErrorCode() + "," + se.getSQLState() + "," + se
                       .getLocalizedMessage() + ")", NotificationType.ERROR)));
-          log.error("连接数据库失败", se);
+          log.error("Unable to connect to the database", se);
           return;
         }
         Properties properties = new Properties();
@@ -140,10 +140,10 @@ public class JpaSupport extends AnAction {
           return;
         }
 
-        // 显示自动生成器配置窗口
+        // Show automatic generator configuration window
         AutoGeneratorSettingsFrame.show(tableSchemaList);
 
-        databaseSettingsFrame.dispose();// 释放数据库设置窗口
+        databaseSettingsFrame.dispose();// Release the database settings window
       }).start();
     });
   }
