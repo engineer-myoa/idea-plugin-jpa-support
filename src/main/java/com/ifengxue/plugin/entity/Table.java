@@ -5,37 +5,37 @@ import java.util.List;
 public class Table {
 
   /**
-   * 是否被选择，选择后才可生成类
+   * Whether it is selected, the class can be generated after selection
    */
   private boolean selected;
 
   /**
-   * 表名
+   * Table Name
    */
   private String tableName;
 
   /**
-   * 表注释
+   * Table comment
    */
   private String tableComment;
 
   /**
-   * 数据库名称
+   * Database Name
    */
   private String tableSchema;
 
   /**
-   * 实体名称
+   * Entity Name
    */
   private String entityName;
 
   /**
-   * 包名称
+   * Package Name
    */
   private String packageName;
 
   /**
-   * 主键类型
+   * Primary key type
    */
   private Class<?> primaryKeyClassType;
 

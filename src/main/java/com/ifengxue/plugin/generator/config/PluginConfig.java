@@ -6,7 +6,7 @@ import java.util.Map;
 public class PluginConfig {
 
   /**
-   * 插件名称
+   * Plugin Name
    */
   private String name;
   private Class<?> clazz;

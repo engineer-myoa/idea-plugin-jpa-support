@@ -57,13 +57,13 @@ public class SelectTablesFrame {
   private final JFrame frameHolder;
 
   private SelectTablesFrame(List<Table> tableList, AutoGeneratorConfig config) {
-    frameHolder = new JFrame("智能选择数据库表");
+    frameHolder = new JFrame("Intelijent Database table select");
     int rowCount = tableList.size();
     SelectTables selectTablesHolder = new SelectTables(tableList);
     JTable table = selectTablesHolder.getTblTableSchema();
     table.setModel(new AbstractTableModel() {
       private static final long serialVersionUID = 8974669315458199207L;
-      String[] columns = {"选中", "序号", "表名", "类名", "注释"};
+      String[] columns = {"Selected", "Serial Number", "Table Name", "Class Name", "Comment"};
 
       @Override
       public int getRowCount() {
@@ -111,7 +111,7 @@ public class SelectTablesFrame {
           case 4:
             return tableList.get(rowIndex).getTableComment();
           default:
-            throw new IllegalStateException("无法识别的列索引:" + columnIndex);
+            throw new IllegalStateException("Unrecognized column index\n:" + columnIndex);
         }
       }
 
@@ -142,34 +142,34 @@ public class SelectTablesFrame {
     frameHolder.setVisible(true);
 
     selectTablesHolder.getBtnCancel().addActionListener(event -> frameHolder.dispose());
-    // 选中所有行
+    // Check all rows
     selectTablesHolder.getBtnSelectAll().addActionListener(event -> {
       for (Table t : tableList) {
         t.setSelected(true);
       }
       table.updateUI();
     });
-    // 全不选
+    // Unselect all
     selectTablesHolder.getBtnSelectNone().addActionListener(event -> {
       for (Table t : tableList) {
         t.setSelected(false);
       }
       table.updateUI();
     });
-    // 反选
+    // Inverse selection
     selectTablesHolder.getBtnSelectOther().addActionListener(event -> {
       for (Table t : tableList) {
         t.setSelected(!t.isSelected());
       }
       table.updateUI();
     });
-    // 开始生成
+    // Start generating
     selectTablesHolder.getBtnGenerate().addActionListener(event -> {
       if (tableList.stream().noneMatch(Table::isSelected)) {
-        Messages.showWarningDialog(Holder.getEvent().getProject(), "没有选择任何待生成的表！", "提示");
+        Messages.showWarningDialog(Holder.getEvent().getProject(), "Did not select any tables to be generated！", "Prompt");
         return;
       }
-      // 开始生成
+      // Start generating
       ApplicationManager.getApplication().executeOnPooledThread(new GeneratorRunner(tableList, config));
     });
   }
@@ -179,7 +179,7 @@ public class SelectTablesFrame {
   }
 
   /**
-   * 生成器
+   * Builder
    */
   private class GeneratorRunner implements Runnable {
 
@@ -208,7 +208,7 @@ public class SelectTablesFrame {
       FastJdbc fastJdbc = new SimpleFastJdbc();
       EntitySourceParser sourceParser = new EntitySourceParser();
 
-      // 生成数量
+      // Number of generation
       AtomicInteger generatCount = new AtomicInteger(tableList.size());
       for (Table table : tableList) {
         Sql sql = SqlBuilder.newSelectBuilder(ColumnSchema.class)
@@ -222,7 +222,7 @@ public class SelectTablesFrame {
         try {
           columnSchemaList = fastJdbc.find(sql.getSql(), ColumnSchema.class, sql.getArgs().toArray());
         } catch (SQLException se) {
-          log.error("读取数据库错误", se);
+          log.error("Database read error", se);
           ApplicationManager.getApplication()
               .invokeLater(() -> Bus.notify(new Notification("JpaSupport", "Error",
                   se.getErrorCode() + "," + se.getSQLState() + "," + se.getLocalizedMessage(),
@@ -230,7 +230,7 @@ public class SelectTablesFrame {
           ApplicationManager.getApplication().invokeAndWait(frameHolder::requestFocus);
           return;
         }
-        // 解析字段列表
+        // Parsing field list
         List<Column> columnList = new ArrayList<>(columnSchemaList.size());
         for (ColumnSchema columnSchema : columnSchemaList) {
           Column column = new Column();
@@ -253,7 +253,7 @@ public class SelectTablesFrame {
         table.setPackageName(config.getEntityPackage());
         table.setColumns(columnList);
 
-        // 配置源码生成信息
+        // Configuring source generation information
         GeneratorConfig generatorConfig = new GeneratorConfig();
         generatorConfig.setDriverConfig(new DriverConfig()
             .setVendor(Vendor.MYSQL)
@@ -283,7 +283,7 @@ public class SelectTablesFrame {
             .setUseLombok(config.isUseLombok()));
         generatorConfig.setPluginConfigs(Collections.emptyList());
 
-        // 生成源码
+        // Generate source code
         String sourceCode = sourceParser.parse(generatorConfig, table);
         WriteCommandAction.runWriteCommandAction(project, () -> {
           String filename = table.getEntityName() + ".java";
@@ -308,15 +308,15 @@ public class SelectTablesFrame {
       PsiDirectory psiDirectory = DirectoryUtil.mkdirs(PsiManager.getInstance(project), directory);
       PsiFile psiFile = psiDirectory.findFile(filename);
       if (psiFile != null) {
-        // 切换UI线程
+        // Switch UI thread
         ApplicationManager.getApplication().invokeLater(() -> {
           int selectButton = Messages
-              .showOkCancelDialog("文件" + filename + "已存在，是否覆盖？", "提示", Messages.getQuestionIcon());
-          // 不覆盖
+              .showOkCancelDialog("File " + filename + "already exist. is it covered?", "Prompt", Messages.getQuestionIcon());
+          // Not covered
           if (selectButton != Messages.OK) {
             return;
           }
-          // 切换IO线程
+          // Switch IO thread
           WriteCommandAction.runWriteCommandAction(project, () -> {
             PsiFile pf = psiDirectory.findFile(filename);
             assert pf != null;
@@ -337,7 +337,7 @@ public class SelectTablesFrame {
         vFile.setCharset(StandardCharsets.UTF_8);
         vFile.setBinaryContent(sourceCode.getBytes(StandardCharsets.UTF_8));
       } catch (IOException e) {
-        log.error("生成源码失败", e);
+        log.error("Source code generation failed", e);
       }
     }
   }

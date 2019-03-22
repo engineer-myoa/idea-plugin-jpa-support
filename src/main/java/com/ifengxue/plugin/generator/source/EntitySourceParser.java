@@ -17,7 +17,7 @@ import com.ifengxue.plugin.generator.tree.visitor.MybatisVisitor;
 import java.io.Serializable;
 
 /**
- * 实体源码解析器
+ * Entity source parser
  */
 public class EntitySourceParser implements SourceParser {
 
@@ -40,7 +40,7 @@ public class EntitySourceParser implements SourceParser {
       classComment.setIndent(indent);
       myClass.addChild(classComment);
     }
-    // 重写toString
+    // Override toString
     if (tablesConfig.isUseLombok()) {
       myClass.addChild(new ToStringMethod() {
         @Override

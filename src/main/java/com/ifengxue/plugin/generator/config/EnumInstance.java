@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class EnumInstance {
 
-  // 实例名
+  // Instance name
   private String name;
   private Map<String, String> propertyMap = new HashMap<>();
 

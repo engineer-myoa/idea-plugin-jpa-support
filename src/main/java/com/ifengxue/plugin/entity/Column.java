@@ -3,47 +3,47 @@ package com.ifengxue.plugin.entity;
 public class Column {
 
   /**
-   * 数据库字段名
+   * Database field name
    */
   private String columnName;
   /**
-   * 实体字段名
+   * Entity field name
    */
   private String fieldName;
   /**
-   * 字段顺序
+   * Field order
    */
   private int sort;
   /**
-   * 数据库数据类型
+   * Database data type
    */
   private String dbDataType;
   /**
-   * Java数据类型
+   * Java data type
    */
   private Class<?> javaDataType;
   /**
-   * 是否是主键
+   * Is is primary key
    */
   private boolean primary;
   /**
-   * 是否允许为null
+   * Is it allow null
    */
   private boolean nullable;
   /**
-   * 是否是自增字段
+   * Is it a self-incrementing field
    */
   private boolean autoIncrement;
   /**
-   * 是否有默认值
+   * Is there a default value
    */
   private boolean hasDefaultValue;
   /**
-   * 默认值，如果是字符串则默认值是"默认值"
+   * If default value is a string, it will be "default value"
    */
   private String defaultValue;
   /**
-   * 字段注释
+   * Field comment
    */
   private String columnComment;
 

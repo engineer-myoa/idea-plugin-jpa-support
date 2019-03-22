@@ -4,7 +4,7 @@ import com.ifengxue.plugin.entity.Table;
 import com.ifengxue.plugin.generator.config.GeneratorConfig;
 
 /**
- * 源码解析器
+ * Source parser
  */
 public interface SourceParser {
 

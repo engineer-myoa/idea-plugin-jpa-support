@@ -71,16 +71,16 @@ public class EntitySourceFile extends AbstractElement {
   public String toString() {
     doVisit();
     StringBuilder builder = new StringBuilder(1000);
-    // 包
+    // package
     builder.append(aPackage.toJavaCode()).append(StringHelper.repeat(lineSeparator, 2));
-    // 导入的类
+    // Imported class
     String importString = anImport.toJavaCode();
     if (!importString.isEmpty()) {
       builder.append(anImport.toJavaCode()).append(lineSeparator);
     }
-    // 类的注释
+    // Class annotation
     aClass.findComment().ifPresent(comment -> builder.append(comment.toJavaCode()).append(lineSeparator));
-    // 类注解
+    // Class annotation
     String annotationString = aClass.getAnnotations()
         .stream()
         .map(Annotation::toJavaCode)
@@ -89,7 +89,7 @@ public class EntitySourceFile extends AbstractElement {
       builder.append(annotationString)
           .append(lineSeparator);
     }
-    // 类声明
+    // Class declaration
     builder.append(aClass.toJavaCode()).append(" {").append(lineSeparator);
     aClass.fields().stream()
         .filter(field -> field.getFieldName()

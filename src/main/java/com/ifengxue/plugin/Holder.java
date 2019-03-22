@@ -1,5 +1,4 @@
 package com.ifengxue.plugin;
-
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import java.util.Objects;
